@@ -28,7 +28,7 @@ Read more about how you can use the icons in the [Iconify usage documentation](h
 - Save the SVG when you pick an icon.
 - Statamic Tag to render the icon (on demand or saved SVG).
 - More filtering options. For example limit to specific icon vendors or licences.
-- 
+- Make the search modal nicer.
 
 ## License
 
