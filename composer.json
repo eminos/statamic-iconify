@@ -1,0 +1,30 @@
+{
+    "name": "eminos/statamic-iconify",
+    "description": "A Statamic addon to use Iconify icons in your Statamic site.",
+    "require-dev": {
+        "php": "^8.1",
+        "laravel/framework": "^10.8",
+        "statamic/cms": "^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "StatamicIconify\\": "src"
+        }
+    },
+    "extra": {
+        "statamic": {
+            "name": "Statamic Iconify",
+            "description": "A Statamic addon to use Iconify icons in your Statamic site."
+        },
+        "laravel": {
+            "providers": [
+                "StatamicIconify\\ServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "pixelfear/composer-dist-plugin": true
+        }
+    }
+}
