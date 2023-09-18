@@ -37,4 +37,21 @@ class IconifyFieldtype extends Fieldtype
     {
         return $data;
     }
+
+    protected function configFieldItems(): array
+    {
+        return [
+            'store_as' => [
+                'display' => 'Store icon as',
+                'instructions' => 'Choose how the selected icon should be stored.',
+                'type' => 'button_group',
+                'default' => 'name',
+                'options' => [
+                    'name' => 'Icon name',
+                    'svg_data' => 'SVG data',
+                ],
+                'width' => 50
+            ],
+        ];
+    }
 }

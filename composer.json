@@ -1,7 +1,11 @@
 {
     "name": "eminos/statamic-iconify",
+    "type": "statamic-addon",
     "description": "A Statamic addon to use Iconify icons in your Statamic site.",
     "license": "MIT",
+    "require": {
+        "statamic/cms": "^4.0"
+    },
     "require-dev": {
         "php": "^8.1",
         "laravel/framework": "^10.8",

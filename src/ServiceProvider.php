@@ -1,8 +1,8 @@
 <?php
- 
+
 namespace StatamicIconify;
- 
-use Statamic\Statamic;
+
+use StatamicIconify\Tags\IconifyTag;
 use Statamic\Providers\AddonServiceProvider;
 use StatamicIconify\Fieldtypes\IconifyFieldtype;
  
@@ -20,9 +20,9 @@ class ServiceProvider extends AddonServiceProvider
         IconifyFieldtype::class,
     ];
 
-    // protected $publishables = [
-    //     __DIR__.'/../dist/build' => 'build',
-    // ];
+    protected $tags = [
+        IconifyTag::class,
+    ];
 
     protected $vite = [
         'hotFile' => null, // set in the constructor for reasons
