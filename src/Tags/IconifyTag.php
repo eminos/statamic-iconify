@@ -16,6 +16,10 @@ class IconifyTag extends Tags
          */
         $fieldValue = array_get($this->context, $fieldName);
 
+        if (!$fieldValue) {
+            return null;
+        }
+
         $rawValue = $fieldValue->raw();
 
         if (is_array($rawValue) && array_key_exists('body', $rawValue)) {
