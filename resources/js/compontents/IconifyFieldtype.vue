@@ -9,11 +9,11 @@
                     <svg v-else v-bind="value.attributes" class="iconify-cursor-pointer iconify-text-4xl iconify-text-gray-800" v-html="value.body" v-tooltip="{content: value.name, delay: 500, autoHide: false}"></svg>
                 </template>
                 <dropdown-item text="Change" @click="openSearchModal" />
-                <dropdown-item text="Remove" @click="value = ''" />
+                <dropdown-item text="Remove" @click="update(null)" />
             </dropdown-list>
         </div>
 
-        <button v-else class="btn btn-xs" @click="openSearchModal">Find an icon</button>
+        <button v-else class="btn" @click="openSearchModal">Browse Iconify</button>
 
         <stack
             v-if="searchModalIsOpen"
@@ -164,9 +164,9 @@ export default {
         },
         select(icon) {
             if (this.config.store_as === 'name') {
-                this.$emit('input', icon.name)
+                this.update(icon.name)
             } else if (this.config.store_as === 'svg_data') {
-                this.$emit('input', this.getIconBuildData(icon))
+                this.update(this.getIconBuildData(icon))
             }
 
             this.searchModalIsOpen = false
