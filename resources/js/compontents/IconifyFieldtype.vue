@@ -171,9 +171,6 @@ export default {
 
             this.searchModalIsOpen = false
         },
-        modalOpened() {
-            this.$refs.query.$el.querySelector('input').focus()
-        }
     }
 };
 </script>
