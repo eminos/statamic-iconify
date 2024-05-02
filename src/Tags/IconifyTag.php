@@ -20,7 +20,7 @@ class IconifyTag extends Tags
             return null;
         }
 
-        $rawValue = $fieldValue->raw();
+        $rawValue = is_array($fieldValue) ? $fieldValue : $fieldValue->raw();
 
         if (is_array($rawValue) && array_key_exists('body', $rawValue)) {
             return $this->renderSVG($rawValue);
