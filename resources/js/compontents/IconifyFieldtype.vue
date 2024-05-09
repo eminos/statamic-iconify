@@ -21,13 +21,15 @@
         >
             <div slot-scope="{ close }" class="iconify-flex iconify-flex-col iconify-h-full iconify-bg-white">
 
-                <header class="bg-white pl-6 pr-3 py-2 mb-4 border-b shadow-md text-lg font-medium flex items-center justify-between">
-                    Search and select an icon
+                <header class="flex items-center sticky top-0 inset-x-0 bg-white shadow px-8 py-2 z-1 h-13">
+                    <h1 class="flex-1 flex items-center text-xl">
+                        Search and select an icon
+                    </h1>
                     <button type="button" class="btn-close" @click="searchModalIsOpen = false">×</button>
                 </header>
 
-                <div class="iconify-px-6 iconify-py-3 iconify-pr-0 iconify-flex-1 iconify-flex iconify-flex-col iconify-overflow-hidden">
-                    <div class="iconify-w-full iconify-flex iconify-gap-4 iconify-mb-4 iconify-pr-6">
+                <div class="iconify-px-3 md:iconify-px-8 iconify-py-4 iconify-pr-0 iconify-flex-1 iconify-flex iconify-flex-col iconify-overflow-hidden">
+                    <div class="iconify-w-full iconify-flex iconify-gap-4 iconify-mb-4">
                         <text-input ref="query" v-model="query" class="iconify-flex-1" placeholder="Search for an icon..." @keydown.enter="search" />
                         <button class="btn-primary" @click="search" :disabled="loading">{{ loading ? 'Searching...' : 'Search' }}</button>
                         <div class="btn-group">
