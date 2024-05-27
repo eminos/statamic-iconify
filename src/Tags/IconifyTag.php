@@ -4,6 +4,7 @@ namespace StatamicIconify\Tags;
 
 use Statamic\Tags\Tags;
 use Statamic\Fields\Value;
+use Illuminate\Support\Arr;
  
 class IconifyTag extends Tags
 {
@@ -14,7 +15,7 @@ class IconifyTag extends Tags
         /**
          * @var Value $fieldValue
          */
-        $fieldValue = array_get($this->context, $fieldName);
+        $fieldValue = Arr::get($this->context, $fieldName);
 
         if (!$fieldValue) {
             return null;
