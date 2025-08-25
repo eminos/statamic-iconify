@@ -1,50 +1,49 @@
 <template>
 
     <div>
-        <div v-if="value" class="iconify-flex iconify-items-center iconify-gap-4">
-            <dropdown-list placement="bottom-center">
+        <div v-if="value" class="iconify:flex iconify:items-center iconify:gap-4">
+            <Dropdown>
                 <template #trigger>
-                    <iconify-icon v-if="typeof value === 'string'" :icon="value" class="iconify-cursor-pointer iconify-text-4xl" v-tooltip="{content: value, delay: 500, autoHide: false}"></iconify-icon>
+                    <iconify-icon v-if="typeof value === 'string'" :icon="value" class="iconify:cursor-pointer iconify:text-4xl" v-tooltip="{content: value, delay: 500, autoHide: false}"></iconify-icon>
 
-                    <svg v-else v-bind="value.attributes" class="iconify-cursor-pointer iconify-text-4xl" v-html="value.body" v-tooltip="{content: value.name, delay: 500, autoHide: false}"></svg>
+                    <svg v-else v-bind="value.attributes" class="iconify:cursor-pointer iconify:text-4xl" v-html="value.body" v-tooltip="{content: value.name, delay: 500, autoHide: false}"></svg>
                 </template>
-                <dropdown-item text="Change" @click="openSearchModal" />
-                <dropdown-item text="Remove" @click="update(null)" />
-            </dropdown-list>
+                <DropdownMenu>
+                    <DropdownItem text="Change" @click="openSearchModal" />
+                    <DropdownItem text="Remove" variant="destructive" @click="update(null)" />
+                </DropdownMenu>
+            </Dropdown>
         </div>
 
-        <button v-else class="btn" @click="openSearchModal">Browse Iconify</button>
+        <Button v-else @click="openSearchModal">Browse Iconify</Button>
 
         <stack
             v-if="searchModalIsOpen"
             @closed="searchModalIsOpen = false"
         >
-            <div slot-scope="{ close }" class="iconify-flex iconify-flex-col iconify-h-full iconify-bg-white dark:bg-dark-800">
+            <div class="iconify:flex iconify:flex-col iconify:h-full bg-white dark:bg-gray-800 p-3 rounded-l-xl">
 
-                <header class="flex items-center sticky top-0 inset-x-0 bg-white dark:bg-dark-550 shadow dark:shadow-dark px-8 py-2 z-1 h-13">
-                    <h1 class="flex-1 flex items-center text-xl">
-                        Search and select an icon
-                    </h1>
-                    <button type="button" class="btn-close" @click="searchModalIsOpen = false">×</button>
+                <header class="flex items-center justify-between pl-3">
+                    <ui-heading :text="__('Search and select an icon')" size="lg" icon="cog" />
+                    <ui-button type="button" icon="x" variant="subtle" @click="searchModalIsOpen = false" />
                 </header>
 
-                <div class="iconify-px-3 md:iconify-px-8 iconify-py-4 iconify-pr-0 iconify-flex-1 iconify-flex iconify-flex-col iconify-overflow-hidden">
-                    <div class="iconify-w-full iconify-flex iconify-gap-4 iconify-mb-4">
-                        <text-input ref="query" v-model="query" class="iconify-flex-1" placeholder="Search for an icon..." @keydown.enter="search" />
-                        <button class="btn-primary" @click="search" :disabled="loading">{{ loading ? 'Searching...' : 'Search' }}</button>
-                        <div class="btn-group">
-                            <button class="btn px-4" :class="{ active: listType === 'grid' }" @click="listType = 'grid'">
-                                <iconify-icon icon="ph:grid-nine-light" class="iconify-text-xl"></iconify-icon>
-                            </button>
-                            <button class="btn px-4" :class="{ active: listType === 'table' }" @click="listType = 'table'">
-                                <iconify-icon icon="ph:table-light" class="iconify-text-xl"></iconify-icon>
-                            </button>
-                        </div>
+                <div class="iconify:px-3 iconify:md:px-8 iconify:py-4 iconify:pr-0 iconify:flex-1 iconify:flex iconify:flex-col iconify:overflow-hidden">
+                    <div class="iconify:w-full iconify:flex iconify:gap-4 iconify:mb-4">
+
+                        <Input ref="queryRef" v-model="query" icon="magnifying-glass" class="iconify:flex-1" placeholder="Search for an icon..." @keydown.enter="search" />
+
+                        <Button variant="primary" @click="search" :disabled="loading">{{ loading ? 'Searching...' : 'Search' }}</Button>
+
+                        <ToggleGroup v-model="listType">
+                            <ToggleItem icon="layout-grid" value="grid" />
+                            <ToggleItem icon="layout-list" value="table" />
+                        </ToggleGroup>
                     </div>
 
-                    <div v-if="result" class="iconify-overflow-y-scroll iconify-flex-1 iconify-pr-6">
+                    <div v-if="result" class="iconify:overflow-y-scroll iconify:flex-1 iconify:pr-6">
 
-                        <table v-if="listType === 'table'" class="data-table iconify-w-full">
+                        <table v-if="listType === 'table'" class="data-table iconify:w-full">
                             <thead>
                                 <tr>
                                     <th>Icon</th>
@@ -55,43 +54,43 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="icon in icons">
+                                <tr v-for="icon in icons" :key="icon.name">
                                     <td>
-                                        <iconify-icon :icon="icon.name" class="iconify-text-2xl"></iconify-icon>
+                                        <iconify-icon :icon="icon.name" class="iconify:text-2xl"></iconify-icon>
                                     </td>
                                     <td>
-                                        <span v-text="icon.name" class="iconify-text-sm"></span>
+                                        <span v-text="icon.name" class="iconify:text-sm"></span>
                                     </td>
                                     <td>
-                                        <span v-text="icon.collection.name" class="iconify-text-sm"></span>
+                                        <span v-text="icon.collection.name" class="iconify:text-sm"></span>
                                     </td>
                                     <td>
-                                        <span v-text="icon.collection.license.title" class="iconify-text-sm"></span>
+                                        <span v-text="icon.collection.license.title" class="iconify:text-sm"></span>
                                     </td>
                                     <td>
-                                        <button class="btn btn-sm" @click="select(icon)">Select</button>
+                                        <Button size="sm" @click="select(icon)">Select</Button>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
 
-                        <div v-if="listType === 'grid'" class="iconify-grid iconify-grid-cols-8 iconify-gap-4">
+                        <Panel v-if="listType === 'grid'" class="iconify:grid iconify:grid-cols-8 iconify:gap-2">
 
-                            <button v-for="icon in icons" class="iconify-relative iconify-aspect-square iconify-bg-gray-100 dark:bg-dark-550 iconify-rounded-lg iconify-flex iconify-items-center iconify-justify-center iconify-group" @click="select(icon)">
+                            <button v-for="icon in icons" :key="icon.name" class="bg-white dark:bg-gray-800 rounded-xl ring ring-gray-200 dark:ring-x-0 dark:ring-b-0 dark:ring-gray-700 iconify:relative iconify:aspect-square iconify:flex iconify:items-center iconify:justify-center iconify:group iconify:cursor-pointer" @click="select(icon)">
 
-                                <iconify-icon :icon="icon.name" class="iconify-text-4xl iconify-text-gray-800 dark:iconify-text-white group-hover:iconify-scale-125 iconify-transition-all"></iconify-icon>
+                                <iconify-icon :icon="icon.name" class="iconify:text-4xl iconify:text-gray-800 iconify:dark:text-white iconify:group-hover:scale-125 iconify:transition-all"></iconify-icon>
 
-                                <div class="iconify-absolute iconify-bottom-0 iconify-left-0 iconify-right-0 iconify-p-2 iconify-bg-gray-50 iconify-text-xs iconify-text-gray-500 iconify-text-center iconify-rounded-b-lg iconify-opacity-0 group-hover:iconify-opacity-100 iconify-transition-opacity">
+                                <div class="iconify:absolute iconify:bottom-0 iconify:left-0 iconify:right-0 iconify:p-2 iconify:bg-gray-50 iconify:text-xs iconify:text-gray-500 iconify:text-center iconify:rounded-b-lg iconify:opacity-0 iconify:group-hover:opacity-100 iconify:transition-opacity iconify:my-0">
                                     <span v-text="icon.name"></span>
                                 </div>
 
-                                <div class="iconify-absolute iconify-top-2 iconify-left-2 iconify-p-1 iconify-bg-gray-200 iconify-text-xs iconify-text-gray-600 iconify-rounded-sm iconify-opacity-0 group-hover:iconify-opacity-100 iconify-transition-opacity">
+                                <div class="iconify:absolute iconify:top-2 iconify:left-2 iconify:p-1 iconify:bg-gray-200 iconify:text-xs iconify:text-gray-600 iconify:rounded-sm iconify:opacity-0 iconify:group-hover:opacity-100 iconify:transition-opacity">
                                     <span v-text="icon.collection.license.title"></span>
                                 </div>
 
                             </button>
 
-                        </div>
+                        </Panel>
                     </div>
 
                 </div>
@@ -105,74 +104,65 @@
 
 </template>
 
-<script>
+<script setup>
+import { ref, computed, getCurrentInstance } from 'vue';
 import { getIcon, buildIcon } from 'iconify-icon';
+import { FieldtypeMixin as Fieldtype } from '@statamic/cms';
+import { Button, ButtonGroup, Input, Dropdown, DropdownMenu, DropdownItem, ToggleGroup, ToggleItem, Panel, Card } from '@statamic/cms/ui';
 
-export default {
+defineOptions({ mixins: [Fieldtype] });
 
-    mixins: [Fieldtype],
+const searchModalIsOpen = ref(false);
+const listType = ref('grid');
+const query = ref('');
+const result = ref(null);
+const loading = ref(false);
+const queryRef = ref(null);
 
-    data() {
-        return {
-            searchModalIsOpen: false,
-            listType: 'grid',
-            query: '',
-            result: null,
-            loading: false,
-        };
-    },
+const icons = computed(() => {
+    if (!result.value) return [];
+    return result.value.icons.map(icon => ({
+        name: icon,
+        collection: result.value.collections[icon.split(':')[0]],
+    }));
+});
 
-    computed: {
-        icons() {
-            if (!this.result) return []
+const { proxy } = getCurrentInstance();
 
-            return this.result.icons.map(icon => {
-                return {
-                    name: icon,
-                    collection: this.result.collections[icon.split(':')[0]],
-                }
-            })
-        }
-    },
+function openSearchModal() {
+    searchModalIsOpen.value = true;
+    setTimeout(() => {
+        const el = queryRef.value?.$el?.querySelector('input');
+        if (el) el.focus();
+    }, 300);
+}
 
-    methods: {
-        openSearchModal() {
-            this.searchModalIsOpen = true
-            this.$wait(300).then(() => { this.$refs.query.$el.querySelector('input').focus() })
-        },
-        search() {
-            this.loading = true
-            ky.get('https://api.iconify.design/search?limit=999&query=' + this.query)
-                .json()
-                .then(data => {
-                   this.result = data
-                })
-                .finally(() => {
-                    this.loading = false
-                })
-        },
-        getIconBuildData(icon) {
-            const iconBuildData = buildIcon(getIcon(icon.name))
+function search() {
+    loading.value = true;
+    ky.get('https://api.iconify.design/search?limit=999&query=' + query.value)
+        .json()
+        .then(data => {
+            result.value = data;
+        })
+        .finally(() => {
+            loading.value = false;
+        });
+}
 
-            const iconData = {
-                name: icon.name,
-            }
+function getIconBuildData(icon) {
+    const iconBuildData = buildIcon(getIcon(icon.name));
+    return {
+        name: icon.name,
+        ...iconBuildData,
+    };
+}
 
-            Object.keys(iconBuildData).forEach(key => {
-                iconData[key] = iconBuildData[key]
-            })
-
-            return iconData
-        },
-        select(icon) {
-            if (this.config.store_as === 'name') {
-                this.update(icon.name)
-            } else if (this.config.store_as === 'svg_data') {
-                this.update(this.getIconBuildData(icon))
-            }
-
-            this.searchModalIsOpen = false
-        },
+function select(icon) {
+    if (proxy.config.store_as === 'name') {
+        proxy.update(icon.name);
+    } else if (proxy.config.store_as === 'svg_data') {
+        proxy.update(getIconBuildData(icon));
     }
-};
+    searchModalIsOpen.value = false;
+}
 </script>
