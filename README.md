@@ -1,3 +1,5 @@
+> ⚠️ **Legacy branch notice:** The `1.x` branch provides legacy support for Statamic 5. For the latest release and current Statamic support, use the [main branch](https://github.com/eminos/statamic-iconify/tree/main).  
+
 # Statamic Iconify
 
 A Statamic plugin for the fantastic [Iconify](https://iconify.design/) framework.
