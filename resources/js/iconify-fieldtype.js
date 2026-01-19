@@ -1,6 +1,3 @@
-import ky from 'ky'; 
-window.ky = ky
-
 import 'iconify-icon';
 
 import IconifyFieldtype from './compontents/IconifyFieldtype.vue';

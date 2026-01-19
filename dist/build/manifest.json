@@ -1,14 +1,15 @@
 {
   "resources/css/iconify-fieldtype.css": {
-    "file": "assets/iconify-fieldtype-BMMH6ot8.css",
+    "file": "assets/iconify-fieldtype-BQto-oNz.css",
     "src": "resources/css/iconify-fieldtype.css",
     "isEntry": true,
+    "name": "iconify-fieldtype",
     "names": [
       "iconify-fieldtype.css"
     ]
   },
   "resources/js/iconify-fieldtype.js": {
-    "file": "assets/iconify-fieldtype-4jFtzRNM.js",
+    "file": "assets/iconify-fieldtype-CCoNlcKi.js",
     "name": "iconify-fieldtype",
     "src": "resources/js/iconify-fieldtype.js",
     "isEntry": true
