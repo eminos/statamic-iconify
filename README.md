@@ -14,6 +14,13 @@ Install this plugin using composer.
 composer require eminos/statamic-iconify
 ```
 
+## Statamic support
+
+| Statamic version | Addon version | Addon branch |
+| --- | --- | --- |
+| Statamic 5 | `1.x` | `1.x` |
+| Statamic 6 | `2.x` | `main` |
+
 ## Features
 
 - Search the library of Iconify icons. 
