@@ -24,9 +24,20 @@
             ]
         }
     },
+    "require-dev": {
+        "orchestra/testbench": "^10.0",
+        "pestphp/pest": "^3.8",
+        "statamic/cms": "^6.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "StatamicIconify\\Tests\\": "tests"
+        }
+    },
     "config": {
         "allow-plugins": {
-            "pixelfear/composer-dist-plugin": true
+            "pixelfear/composer-dist-plugin": true,
+            "pestphp/pest-plugin": true
         }
     }
 }

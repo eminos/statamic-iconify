@@ -1,6 +1,6 @@
 {
   "resources/css/iconify-fieldtype.css": {
-    "file": "assets/iconify-fieldtype-BQto-oNz.css",
+    "file": "assets/iconify-fieldtype-drRyM0C6.css",
     "src": "resources/css/iconify-fieldtype.css",
     "isEntry": true,
     "name": "iconify-fieldtype",
@@ -9,7 +9,7 @@
     ]
   },
   "resources/js/iconify-fieldtype.js": {
-    "file": "assets/iconify-fieldtype-CCoNlcKi.js",
+    "file": "assets/iconify-fieldtype-ONci9Ddf.js",
     "name": "iconify-fieldtype",
     "src": "resources/js/iconify-fieldtype.js",
     "isEntry": true
